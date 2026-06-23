@@ -81,12 +81,12 @@ public sealed class HolographicFoilEffect : VideoEffectBase, IFileItem, IResourc
 
     [Display(GroupName = nameof(Texts.RevealGroup), Name = nameof(Texts.RevealRangeName), Description = nameof(Texts.RevealRangeDesc), Order = 32, ResourceType = typeof(Texts))]
     [AnimationSlider("F1", "°", 1d, 180d)]
-    [AngleRevealVisible]
+    [ImageAtlasVisible]
     public Animation RevealRange { get; } = new(90, 1, 180);
 
     [Display(GroupName = nameof(Texts.RevealGroup), Name = nameof(Texts.RevealBlendName), Description = nameof(Texts.RevealBlendDesc), Order = 33, ResourceType = typeof(Texts))]
     [AnimationSlider("F2", "", 0d, 1d)]
-    [AngleRevealVisible]
+    [ImageAtlasVisible]
     public Animation RevealBlend { get; } = new(0.35, 0, 1);
 
     [Display(GroupName = nameof(Texts.AtlasGroup), Name = nameof(Texts.RevealImageName), Description = nameof(Texts.RevealImageDesc), Order = 40, ResourceType = typeof(Texts))]
