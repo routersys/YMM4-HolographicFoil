@@ -10,6 +10,8 @@ YukkuriMovieMaker4（YMM4）上で動作する、**角度反応型のホログ�
 カメラ角度・アイテム回転・手動指定の視線角度に応じて回折虹彩・疑似凹凸・細線反射・きらめきが変化します。
 角度別に切り替わる潜像としてギロシェパターンまたは画像アトラスを使用でき、各パラメータはアニメーションに対応しています。
 
+![Image](https://github.com/routersys/YMM4-HolographicFoil/blob/main/docs/HolographicFoil.png)
+
 ---
 
 ## 目次
