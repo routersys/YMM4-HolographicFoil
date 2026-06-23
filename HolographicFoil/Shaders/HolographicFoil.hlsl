@@ -74,23 +74,21 @@ float Guilloche(float2 localUv, float angleRad, float scale)
     return smoothstep(0.86, 0.98, abs(a * b));
 }
 
-float3 SampleAtlas(float2 localUv, float angleValue, float scale)
+float4 SampleAtlas(float2 localUv, float angleValue)
 {
     float frames = clamp(round(atlasInfo.z), 2.0, 16.0);
     float range = max(revealRange, 1.0);
     float coordinate = saturate((angleValue + range * 0.5) / range) * (frames - 1.0);
-    float slit = frac(localUv.x * frames * max(scale, 0.1) * 12.0 + angleValue * 0.015);
-    coordinate = clamp(coordinate + (slit - 0.5) * revealBlend, 0.0, frames - 1.0);
     float lower = floor(coordinate);
     float upper = min(lower + 1.0, frames - 1.0);
     float fraction = coordinate - lower;
-    float width = max(revealBlend, 0.0001);
+    float width = clamp(revealBlend, 0.0001, 1.0);
     float blend = smoothstep(0.5 - width * 0.5, 0.5 + width * 0.5, fraction);
     float2 uv0 = float2((localUv.x + lower) / frames, localUv.y);
     float2 uv1 = float2((localUv.x + upper) / frames, localUv.y);
     float4 c0 = AtlasTexture.SampleLevel(SourceSampler, uv0, 0);
     float4 c1 = AtlasTexture.SampleLevel(SourceSampler, uv1, 0);
-    return lerp(c0.rgb, c1.rgb, blend);
+    return lerp(c0, c1, blend);
 }
 
 float4 main(
@@ -133,6 +131,8 @@ float4 main(
 
     float3 foil = foilColor.rgb * (0.22 * broad + 0.48 * microline + specular) + cycle * rainbow * (0.45 * microline + 0.2 * broad) + sparkleValue;
 
+    float3 base = source.rgb;
+
     if (revealMode == 1)
     {
         float latent = Guilloche(localUv, angleRad, patternScale);
@@ -140,12 +140,13 @@ float4 main(
     }
     else if (revealMode == 2)
     {
-        float3 atlas = SampleAtlas(localUv, angle, patternScale);
-        foil += atlas * revealStrength;
+        float4 atlas = SampleAtlas(localUv, angle);
+        float k = saturate(revealStrength) * mask;
+        base = source.rgb * (1.0 - k * atlas.a) + source.a * atlas.rgb * k;
     }
 
     float strength = mask * foilColor.a;
-    float3 result = source.rgb + source.a * strength * foil;
+    float3 result = base + source.a * strength * foil;
     result = min(saturate(result), source.a.xxx);
     return float4(lerp(source.rgb, result, amount), source.a);
 }
