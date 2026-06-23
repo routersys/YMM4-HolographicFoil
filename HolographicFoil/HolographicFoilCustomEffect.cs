@@ -134,7 +134,7 @@ internal sealed class HolographicFoilCustomEffect(IGraphicsDevicesAndContext dev
         public override void MapOutputRectToInputRects(RawRect outputRect, RawRect[] inputRects)
         {
             if (inputRects.Length > 0)
-                inputRects[0] = outputRect;
+                inputRects[0] = new RawRect(outputRect.Left - 1, outputRect.Top - 1, outputRect.Right + 1, outputRect.Bottom + 1);
             if (inputRects.Length > 1)
                 inputRects[1] = new RawRect(0, 0, (int)Math.Ceiling(constants.AtlasInfo.X), (int)Math.Ceiling(constants.AtlasInfo.Y));
         }
