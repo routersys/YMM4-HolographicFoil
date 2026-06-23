@@ -1,48 +1,28 @@
-# v1.0.1 - ホログラム箔 for YMM4
+# v1.0.2 - ホログラム箔 for YMM4
 
-v1.0.0 に対する保守リリースです。
-未使用コードの削除・UI 表示条件の統一・ローカライズ文言の整合を行います。
-箔合成および潜像生成の描画結果に変更はありません。
+v1.0.1 に対する保守リリースです。
+レリーフの法線算出で行う近傍参照に対し、入力矩形の供給範囲を修正します。
+パラメーター・UI・ローカライズ文言に変更はありません。
 
 ---
 
 ## 修正
 
-### 1. 角度範囲・切替補間の表示条件をアトラスモード限定に変更
+### 1. 近傍参照に対する入力矩形へ 1px マージンを追加
 
-`RevealRange`（角度範囲）と `RevealBlend`（切替補間）はシェーダー上 `ImageAtlas` モードの `SampleAtlas` でのみ参照され、`Guilloche` モードでは無効でした。
-表示属性を `AngleRevealVisible`（`RevealMode != None`）から `ImageAtlasVisible`（`RevealMode == ImageAtlas`）へ変更し、アトラス専用パラメーターである `RevealImage`・`RevealFrames` と表示条件を統一します。
+レリーフの法線はピクセルシェーダーで対象ピクセルの上下左右 ±1px を線形サンプラーで参照します。
+`MapOutputRectToInputRects` が入力 0（合成元）の要求矩形を出力矩形と同一にしていたため、Direct2D がタイル分割して描画する場合にタイル境界で近傍テクセルが供給されず、境界に沿った継ぎ目が生じ得ました。
 
-| プロパティ | 変更前 | 変更後 |
+入力 0 の要求矩形を全方向へ 1px 拡張し、近傍参照に必要なハロを確実に要求するよう変更します。
+
+| メソッド | 変更前 | 変更後 |
 |---|---|---|
-| `RevealRange` | `AngleRevealVisible` | `ImageAtlasVisible` |
-| `RevealBlend` | `AngleRevealVisible` | `ImageAtlasVisible` |
+| `MapOutputRectToInputRects` | `inputRects[0] = outputRect` | 出力矩形を全方向へ 1px 拡張 |
 
-`RevealStrength` は `Guilloche`・`ImageAtlas` の両モードで使用するため `AngleRevealVisible` のまま維持します。
-
----
-
-### 2. 未使用の補助計算メソッドの削除
-
-`HolographicFoilMath` の以下のメソッドは実行時に呼び出されていません。虹彩サイクルとアトラスのフレーム補間はシェーダー（`CycleColor`・`SampleAtlas`）が GPU 上で計算するため、実装の単一化のために削除します。
-
-| 削除したメソッド |
-|---|
-| `ComputeRevealCoordinate(double, double, int)` |
-| `ComputeFrameWeights(double, int, double, Span<float>)` |
-| `EvaluateRgbCycle(double)` |
-| `SmoothStep(double, double, double)` |
-
-実行時に使用する `NormalizeAngleDegrees`・`ComputeCameraYawDegrees` とそのテストは維持します。削除したメソッドに対応するユニットテストも併せて削除します。
+`InputBounds` は `MapInputRectsToOutputRect` で全入力範囲から算出されるため本変更の影響を受けません。画像端での範囲外参照は従来どおり 0 として扱われ、内部タイル境界でのみ真の近傍テクセルが供給されます。
 
 ---
 
-### 3. ローカライズ文言の整合（RevealRangeDesc）
+### 2. プラグインバージョンの更新
 
-`RevealRange` をアトラスモード限定としたため、`RevealRangeDesc` の説明から潜像（ギロシェ）への言及を削除し、アトラス画像のフレーム切り替えを表す文言へ統一します。`Texts.csv` の編集のみで各ロケールのリソースが再生成されます。
-
----
-
-### 4. プラグインバージョンの更新
-
-`HolographicFoil.csproj` の `<Version>` を `1.0.0` から `1.0.1` へ更新します。
+`HolographicFoil.csproj` の `<Version>` を `1.0.1` から `1.0.2` へ更新します。
