@@ -1,0 +1,6 @@
+namespace HolographicFoil;
+
+internal static class ShaderResourceUri
+{
+    public static Uri Get(string shaderName) => new($"pack://application:,,,/HolographicFoil;component/Shaders/{shaderName}.cso", UriKind.Absolute);
+}
