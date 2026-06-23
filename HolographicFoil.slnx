@@ -6,5 +6,8 @@
   <Project Path="HolographicFoil/HolographicFoil.csproj">
     <Platform Solution="*|x64" Project="x64" />
   </Project>
+  <Project Path="HolographicFoil.Tests/HolographicFoil.Tests.csproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
   <Project Path="YukkuriMovieMaker.Generator/YukkuriMovieMaker.Generator/YukkuriMovieMaker.Generator.csproj" />
 </Solution>
