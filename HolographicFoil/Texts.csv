@@ -43,7 +43,7 @@ RevealModeImageAtlas,,画像アトラス,Image Atlas,图像图集,影像圖集,�
 RevealStrengthName,,潜像強度,Reveal Strength,显现强度,顯現強度,표시 강도,Intensidad de revelado,قوة الإظهار,Kekuatan Tampil
 RevealStrengthDesc,,角度で現れる模様や画像の強さです。,Controls hidden pattern or atlas strength.,控制隐藏图案或图集强度。,控制隱藏圖案或圖集強度。,숨은 패턴이나 아틀라스 강도입니다.,Controla la fuerza del patrón oculto.,يتحكم في قوة النمط أو الأطلس.,Mengatur kekuatan pola atau atlas.
 RevealRangeName,,角度範囲,Angle Range,角度范围,角度範圍,각도 범위,Rango de ángulo,نطاق الزاوية,Rentang Sudut
-RevealRangeDesc,,角度別画像や潜像が切り替わる範囲です。,Controls the angle range used for reveal changes.,控制显现切换使用的角度范围。,控制顯現切換使用的角度範圍。,표시 전환에 사용할 각도 범위입니다.,Controla el rango usado por el revelado.,يتحكم في نطاق زاوية الإظهار.,Mengatur rentang sudut tampilan.
+RevealRangeDesc,,角度別画像のフレームが切り替わる角度範囲です。,Controls the angle range over which the atlas frames switch.,控制图集角度帧切换的角度范围。,控制圖集角度影格切換的角度範圍。,아틀라스 각도 프레임이 전환되는 각도 범위입니다.,Controla el rango de ángulo en que cambian los fotogramas del atlas.,يتحكم في نطاق الزاوية الذي تتبدل فيه إطارات الأطلس.,Mengatur rentang sudut pergantian frame atlas.
 RevealBlendName,,切替補間,Reveal Blend,切换混合,切換混合,전환 보간,Mezcla de revelado,مزج الإظهار,Campuran Tampil
 RevealBlendDesc,,角度別画像の隣接フレームを混ぜる幅です。,Controls blending between neighboring angle frames.,控制相邻角度帧的混合宽度。,控制相鄰角度影格的混合寬度。,인접 각도 프레임의 혼합 폭입니다.,Controla la mezcla entre fotogramas vecinos.,يتحكم في مزج إطارات الزاوية المتجاورة.,Mengatur campuran antar frame sudut.
 RevealImageName,,アトラス画像,Atlas Image,图集图像,圖集影像,아틀라스 이미지,Imagen de atlas,صورة الأطلس,Gambar Atlas
